@@ -200,17 +200,17 @@ skills:
   toolset:
   - name: Figma • Adobe XD • Autocad • Rhino 3D • Adobe Photoshop • Adobe Indesign • HTML • CSS
 
-  languages:
-    title: Languages
-    info:
-    - idiom: English
-      level: Professional
+languages:
+  title: Languages
+  info:
+  - idiom: English
+    level: Professional
 
-    - idiom: French
-      level: Professional
+  - idiom: French
+    level: Professional
 
-    - idiom: Greek
-      level: Native
+  - idiom: Greek
+    level: Native
     #level: 98%
 
   #- name: Javascript & jQuery
