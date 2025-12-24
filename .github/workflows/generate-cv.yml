@@ -1,0 +1,59 @@
+name: Generate CV PDF
+
+# Trigger when data.yml or the script changes
+on:
+  push:
+    paths:
+      - 'data.yml'
+      - 'generate_cv.rb'
+      - 'cv.md'
+    branches:
+      - main
+      - master
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  build-pdf:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Set up Ruby
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+
+      # 3. Install Pandoc
+      - name: Install Pandoc
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pandoc
+
+      # 4. Install LaTeX
+      - name: Install LaTeX
+        run: |
+          sudo apt-get install -y texlive-latex-base texlive-fonts-recommended texlive-latex-extra
+
+      # 5. Generate PDF from YAML
+      - name: Generate CV PDF
+        run: ruby generate_cv.rb data.yml cv.pdf
+
+      # 6. Upload PDF as artifact (downloadable)
+      - name: Upload PDF artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: cv-pdf
+          path: cv.pdf
+
+      # 7. Commit and push PDF back to repository
+      - name: Commit PDF to repository
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add cv.pdf
+          git diff --staged --quiet || git commit -m "Auto-generate CV PDF from data.yml"
+          git push
