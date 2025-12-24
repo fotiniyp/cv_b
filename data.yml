@@ -33,19 +33,6 @@ sidebar:
   #hackerrank: # Please provide your HackerRank username.
   #leetcode: # Please provide your LeetCode username.
   #pdf: # Add a PDF link here if you want to include a PDF custom version in your resume.
-
-  languages:
-    title: Languages
-    info:
-    - idiom: English
-      level: Professional
-
-    - idiom: French
-      level: Professional
-
-    - idiom: Greek
-      level: Native
-
   #interests:
     #title: Skills
     #info:
@@ -212,6 +199,18 @@ skills:
 
   toolset:
   - name: Figma • Adobe XD • Autocad • Rhino 3D • Adobe Photoshop • Adobe Indesign • HTML • CSS
+
+  languages:
+    title: Languages
+    info:
+    - idiom: English
+      level: Professional
+
+    - idiom: French
+      level: Professional
+
+    - idiom: Greek
+      level: Native
     #level: 98%
 
   #- name: Javascript & jQuery
