@@ -7,6 +7,7 @@ on:
       - 'data.yml'
       - 'generate_cv.rb'
       - 'cv.md'
+      - 'index.html'
     branches:
       - main
       - master
@@ -15,6 +16,8 @@ on:
 # Grant write permissions to the workflow
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 jobs:
   build-pdf:
@@ -63,3 +66,34 @@ jobs:
           git add cv.pdf
           git diff --staged --quiet || git commit -m "Auto-generate CV PDF from data.yml"
           git push
+
+  # Deploy to GitHub Pages
+  deploy:
+    needs: build-pdf
+    runs-on: ubuntu-latest
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+
+      # Pull latest changes (including the generated PDF)
+      - name: Pull latest changes
+        run: git pull origin ${{ github.ref_name }}
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload to GitHub Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

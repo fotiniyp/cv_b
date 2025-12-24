@@ -33,8 +33,8 @@ def generate_markdown(data)
   md << "- GitHub: #{sidebar['github']}" if sidebar['github']
   md << ""
 
-  # Languages
-  languages = sidebar['languages'] || {}
+  # Languages (can be in sidebar or at root level)
+  languages = sidebar['languages'] || data['languages'] || {}
   if languages['info'] && !languages['info'].empty?
     md << "---"
     md << ""
